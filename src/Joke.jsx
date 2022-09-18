@@ -1,7 +1,7 @@
 import React from "react";
 
 const Joke = ({ joke }) => {
-  return <li>{joke}</li>;
+  return <div>{joke}</div>;
 };
 
 export default Joke;
