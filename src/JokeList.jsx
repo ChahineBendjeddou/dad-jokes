@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import Joke from "./Joke";
+import "./JokeList.css";
 
 const JokeList = () => {
   const API_URL = "https://icanhazdadjoke.com/";
@@ -22,14 +23,23 @@ const JokeList = () => {
   }, []);
 
   return (
-    <>
-      <h1>Jokes</h1>
-      <ul className="">
+    <div className="JokeList">
+      <div className="JokeList-sidebar">
+        <h1 className="JokeList-title">
+          <span>Dad</span> Jokes
+        </h1>
+        <img
+          src="https://assets.dryicons.com/uploads/icon/svg/8927/0eb14c71-38f2-433a-bfc8-23d9c99b3647.svg"
+          alt="laughing tears"
+        />
+        <button className="JokeList-getmore">New Jokes</button>
+      </div>
+      <div className="JokeList-jokes">
         {jokes.map(({ joke, id }) => (
           <Joke key={id} joke={joke} />
         ))}
-      </ul>
-    </>
+      </div>
+    </div>
   );
 };
 
