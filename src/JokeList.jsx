@@ -13,7 +13,7 @@ const JokeList = () => {
     const options = { headers: { Accept: "application/json" } };
     while (jokes.size < NUMBER_JOKES) {
       const { data } = await axios.get(API_URL, options);
-      jokes.add(data);
+      jokes.add({ id: data.id, joke: data.joke, votes: 0 });
     }
     setJokes([...jokes]);
   }
@@ -35,8 +35,8 @@ const JokeList = () => {
         <button className="JokeList-getmore">New Jokes</button>
       </div>
       <div className="JokeList-jokes">
-        {jokes.map(({ joke, id }) => (
-          <Joke key={id} joke={joke} />
+        {jokes.map((j) => (
+          <Joke key={j.id} joke={j.joke} votes={j.votes} />
         ))}
       </div>
     </div>
