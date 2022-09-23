@@ -21,6 +21,7 @@ const Joke = (state) => {
     return { color: "#f44336", emojie: "em em-angry" };
   }
 
+  const { color, emojie } = getColorAndEmojie();
   return (
     <div className="Joke">
       <div className="Joke-buttons">
@@ -28,10 +29,7 @@ const Joke = (state) => {
           class="fa-solid fa-arrow-up"
           onClick={() => state.handleVote(state.id, 1)}
         ></i>
-        <span
-          style={{ borderColor: getColorAndEmojie().color }}
-          className="Joke-votes"
-        >
+        <span style={{ borderColor: color }} className="Joke-votes">
           {state.votes}
         </span>
         <i
@@ -42,7 +40,7 @@ const Joke = (state) => {
       <div className="Joke-text">{state.text}</div>
 
       <div className="Joke-smiley">
-        <i className={getColorAndEmojie().emojie}></i>
+        <i className={emojie}></i>
       </div>
     </div>
   );
