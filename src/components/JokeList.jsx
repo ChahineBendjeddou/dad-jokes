@@ -1,4 +1,5 @@
 import axios from "axios";
+import { v4 as uuid } from "uuid";
 import React, { useState, useEffect } from "react";
 import Joke from "./Joke";
 import "./JokeList.css";
@@ -13,15 +14,16 @@ const JokeList = () => {
     const options = { headers: { Accept: "application/json" } };
     while (jokes.size < NUMBER_JOKES) {
       const { data } = await axios.get(API_URL, options);
-      jokes.add({ id: data.id, joke: data.joke, votes: 0 });
+      jokes.add(data.joke);
     }
-    setJokes([...jokes]);
+    [...jokes].map((joke) =>
+      setJokes((state) => [...state, { id: uuid(), joke: joke, votes: 0 }])
+    );
   }
 
   useEffect(() => {
     getJokes();
   }, []);
-
   return (
     <div className="JokeList">
       <div className="JokeList-sidebar">
