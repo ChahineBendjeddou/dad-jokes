@@ -12,24 +12,26 @@ const JokeList = () => {
   );
   const [isLoading, setIsLoading] = useState(false);
 
-  async function getJokes() {
+  async function getJokes(jokes) {
     setIsLoading(true);
-    const jokesSet = new Set();
+    const seenJokes = new Set(jokes.map((j) => j.text));
+    const newJokes = [];
     const options = { headers: { Accept: "application/json" } };
-    while (jokesSet.size < NUMBER_JOKES) {
+    while (newJokes.length < NUMBER_JOKES) {
       const { data } = await axios.get(API_URL, options);
-      jokesSet.add(data.joke);
+      if (!seenJokes.has(data.joke)) {
+        newJokes.push(data.joke);
+      }
     }
-    [...jokesSet].map((joke) =>
+    newJokes.map((joke) =>
       setJokes((state) => [...state, { id: uuid(), text: joke, votes: 0 }])
     );
     setIsLoading(false);
   }
-
   useEffect(() => {
     window.localStorage.setItem("jokes", JSON.stringify(jokes));
     if (jokes.length) return;
-    getJokes();
+    getJokes(jokes);
   }, [jokes]);
 
   function handleVote(id, delta) {
@@ -50,7 +52,7 @@ const JokeList = () => {
           src="https://assets.dryicons.com/uploads/icon/svg/8927/0eb14c71-38f2-433a-bfc8-23d9c99b3647.svg"
           alt="laughing tears"
         />
-        <button className="JokeList-getmore" onClick={getJokes}>
+        <button className="JokeList-getmore" onClick={() => getJokes(jokes)}>
           New Jokes
         </button>
       </div>
