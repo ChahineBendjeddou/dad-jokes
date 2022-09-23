@@ -66,15 +66,17 @@ const JokeList = () => {
         ""
       )}
       <div className="JokeList-jokes">
-        {jokes.map((j) => (
-          <Joke
-            id={j.id}
-            key={j.id}
-            text={j.text}
-            votes={j.votes}
-            handleVote={handleVote}
-          />
-        ))}
+        {jokes
+          .sort((a, b) => b.votes - a.votes)
+          .map((j) => (
+            <Joke
+              id={j.id}
+              key={j.id}
+              text={j.text}
+              votes={j.votes}
+              handleVote={handleVote}
+            />
+          ))}
       </div>
     </div>
   );
