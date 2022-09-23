@@ -26,14 +26,14 @@ const Joke = (state) => {
     <div className="Joke">
       <div className="Joke-buttons">
         <i
-          class="fa-solid fa-arrow-up"
+          className="fa-solid fa-arrow-up"
           onClick={() => state.handleVote(state.id, 1)}
         ></i>
         <span style={{ borderColor: color }} className="Joke-votes">
           {state.votes}
         </span>
         <i
-          class="fa-solid fa-arrow-down"
+          className="fa-solid fa-arrow-down"
           onClick={() => state.handleVote(state.id, -1)}
         ></i>
       </div>

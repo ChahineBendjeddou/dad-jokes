@@ -7,23 +7,27 @@ import "./JokeList.css";
 const JokeList = () => {
   const API_URL = "https://icanhazdadjoke.com/";
   const NUMBER_JOKES = 10;
-  const [jokes, setJokes] = useState([]);
-
+  const [jokes, setJokes] = useState(
+    JSON.parse(window.localStorage.getItem("jokes") || "[]")
+  );
   async function getJokes() {
-    const jokes = new Set();
+    const jokesSet = new Set();
     const options = { headers: { Accept: "application/json" } };
-    while (jokes.size < NUMBER_JOKES) {
+    while (jokesSet.size < NUMBER_JOKES) {
       const { data } = await axios.get(API_URL, options);
-      jokes.add(data.joke);
+      jokesSet.add(data.joke);
     }
-    [...jokes].map((joke) =>
+    [...jokesSet].map((joke) =>
       setJokes((state) => [...state, { id: uuid(), text: joke, votes: 0 }])
     );
   }
 
   useEffect(() => {
+    window.localStorage.setItem("jokes", JSON.stringify(jokes));
+    if (jokes.length) return;
     getJokes();
-  }, []);
+  }, [jokes]);
+
   function handleVote(id, delta) {
     setJokes((state) =>
       state.map((joke) =>
