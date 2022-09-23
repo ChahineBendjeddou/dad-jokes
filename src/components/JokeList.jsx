@@ -45,7 +45,9 @@ const JokeList = () => {
           src="https://assets.dryicons.com/uploads/icon/svg/8927/0eb14c71-38f2-433a-bfc8-23d9c99b3647.svg"
           alt="laughing tears"
         />
-        <button className="JokeList-getmore">New Jokes</button>
+        <button className="JokeList-getmore" onClick={getJokes}>
+          New Jokes
+        </button>
       </div>
       <div className="JokeList-jokes">
         {jokes.map((j) => (
