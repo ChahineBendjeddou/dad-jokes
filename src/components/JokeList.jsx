@@ -10,7 +10,10 @@ const JokeList = () => {
   const [jokes, setJokes] = useState(
     JSON.parse(window.localStorage.getItem("jokes") || "[]")
   );
+  const [isLoading, setIsLoading] = useState(false);
+
   async function getJokes() {
+    setIsLoading(true);
     const jokesSet = new Set();
     const options = { headers: { Accept: "application/json" } };
     while (jokesSet.size < NUMBER_JOKES) {
@@ -20,6 +23,7 @@ const JokeList = () => {
     [...jokesSet].map((joke) =>
       setJokes((state) => [...state, { id: uuid(), text: joke, votes: 0 }])
     );
+    setIsLoading(false);
   }
 
   useEffect(() => {
@@ -41,6 +45,7 @@ const JokeList = () => {
         <h1 className="JokeList-title">
           <span>Dad</span> Jokes
         </h1>
+
         <img
           src="https://assets.dryicons.com/uploads/icon/svg/8927/0eb14c71-38f2-433a-bfc8-23d9c99b3647.svg"
           alt="laughing tears"
@@ -49,6 +54,15 @@ const JokeList = () => {
           New Jokes
         </button>
       </div>
+
+      {isLoading ? (
+        <div className="JokeList-spinner">
+          <i className="far fa-8x fa-laugh fa-spin" />
+          <h1 className="">Loading...</h1>
+        </div>
+      ) : (
+        ""
+      )}
       <div className="JokeList-jokes">
         {jokes.map((j) => (
           <Joke

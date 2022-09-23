@@ -59,4 +59,12 @@
 }
 .JokeList-jokes::-webkit-scrollbar {
     display: none;
-  }
+}
+
+.JokeList-spinner{
+    position: absolute;
+    z-index: 2;
+    top:50%;
+    left:60%;
+    transform: translate(-50%, -50%);
+}
