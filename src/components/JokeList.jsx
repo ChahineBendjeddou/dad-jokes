@@ -17,13 +17,20 @@ const JokeList = () => {
       jokes.add(data.joke);
     }
     [...jokes].map((joke) =>
-      setJokes((state) => [...state, { id: uuid(), joke: joke, votes: 0 }])
+      setJokes((state) => [...state, { id: uuid(), text: joke, votes: 0 }])
     );
   }
 
   useEffect(() => {
     getJokes();
   }, []);
+  function handleVote(id, delta) {
+    setJokes((state) =>
+      state.map((joke) =>
+        joke.id === id ? { ...joke, votes: joke.votes + delta } : joke
+      )
+    );
+  }
   return (
     <div className="JokeList">
       <div className="JokeList-sidebar">
@@ -38,7 +45,13 @@ const JokeList = () => {
       </div>
       <div className="JokeList-jokes">
         {jokes.map((j) => (
-          <Joke key={j.id} joke={j.joke} votes={j.votes} />
+          <Joke
+            id={j.id}
+            key={j.id}
+            text={j.text}
+            votes={j.votes}
+            handleVote={handleVote}
+          />
         ))}
       </div>
     </div>
